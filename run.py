@@ -1,9 +1,7 @@
-import pygame
 import sys
 from pygame.locals import *
 from pygame import *
 from playsound import playsound
-from gtts import gTTS
 
 # font = pygame.font.SysFont('Arial', 25)
 
