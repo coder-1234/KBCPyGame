@@ -1,4 +1,5 @@
 import sys
+import pygame
 from pygame.locals import *
 from pygame import *
 from playsound import playsound
@@ -82,17 +83,14 @@ class Game(object):
         pygame.init()
         pygame.display.set_caption('KBC Pygame')
         self.screen = pygame.display.set_mode((1366, 768), 0, 32)
-        # self.screen.fill(self.WHITE)
         self.addBackgroudPic()
         self.font = pygame.font.SysFont('Arial', 25)
         self.bigFont = pygame.font.SysFont('Arial', 50)
 
-    # def playMusic(self):
-
     def addBackgroudPic(self):
         bg = pygame.image.load("kbc.jpg")
         bg = pygame.transform.scale(bg, (1366, 768))
-        self.screen.blit(bg, (0, 0))
+        self.screen.blit(bg, (0, 0)) #To draw surface on screen at given position (x,y) 
 
     def RoundedRectangle(self, rect, color, radius=0.4):
         """
@@ -111,12 +109,9 @@ class Game(object):
         pos = rect.topleft
         rect.topleft = 0, 0
         rectangle = Surface(rect.size, SRCALPHA)
-
         circle = Surface([min(rect.size)*3]*2, SRCALPHA)
         draw.ellipse(circle, (0, 0, 0), circle.get_rect(), 0)
         circle = transform.smoothscale(circle, [int(min(rect.size)*radius)]*2)
-        # rectangle.blit(font.render('Hello!', True, (0, 0, 0)), (200, 100),)
-        # rectangle.blit(text, textRect)
         radius = rectangle.blit(circle, (0, 0))
         radius.bottomright = rect.bottomright
         rectangle.blit(circle, radius)
@@ -124,13 +119,10 @@ class Game(object):
         rectangle.blit(circle, radius)
         radius.bottomleft = rect.bottomleft
         rectangle.blit(circle, radius)
-
         rectangle.fill((0, 0, 0), rect.inflate(-radius.w, 0))
         rectangle.fill((0, 0, 0), rect.inflate(0, -radius.h))
-
         rectangle.fill(color, special_flags=BLEND_RGBA_MAX)
         rectangle.fill((255, 255, 255, alpha), special_flags=BLEND_RGBA_MIN)
-
         return self.screen.blit(rectangle, pos)
 
     def addPriceTile(self):
@@ -214,6 +206,7 @@ class Game(object):
     def gameRules(self):
         self.addBackgroudPic()
         readRules = True
+        isPlay=True
         while readRules:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -225,7 +218,6 @@ class Game(object):
                     if event.key == pygame.K_q:
                         pygame.quit()
                         quit()
-            # self.screen.fill(self.WHITE)
             self.displayText("Welcome to KBC Game For Developers",
                              self.red,
                              630, 50, True
@@ -293,14 +285,14 @@ class Game(object):
                              660, 650, True)
             pygame.display.update()
             if isPlay:
-                # playsound("KbcIntro.mp3")
+                playsound("KbcIntro.mp3")
                 isPlay = False
         self.currentQuestion = 0
         self.selectedAnswer = -1
         self.playGame()
 
     def playGame(self):
-        # playsound("KBCIntro.mp3")
+        playsound("KBCIntro.mp3")
         self.addBackgroudPic()
         self.addPriceTile()
         self.addQuestionBox()
@@ -344,7 +336,7 @@ class Game(object):
                             self.resultScreen(isLost=True)
             pygame.display.update()
             if isPlay:
-                # playsound("KbcQuestion.mp3")
+                playsound("KbcQuestion.mp3")
                 isPlay = False
 
 
